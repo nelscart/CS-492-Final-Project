@@ -10,12 +10,14 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import edu.oregonstate.cs492.githubsearchwithsettings.R
 import edu.oregonstate.cs492.githubsearchwithsettings.data.GitHubRepo
 import edu.oregonstate.cs492.githubsearchwithsettings.util.LoadingStatus
+import edu.oregonstate.cs492.githubsearchwithsettings.util.buildGitHubQuery
 
 class GitHubSearchFragment : Fragment(R.layout.fragment_github_search) {
     private val viewModel: GitHubSearchViewModel by viewModels()
@@ -72,10 +74,19 @@ class GitHubSearchFragment : Fragment(R.layout.fragment_github_search) {
         )
         }
 
+        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+
         searchBtn.setOnClickListener {
             val query = searchBoxET.text.toString()
             if (!TextUtils.isEmpty(query)) {
-                viewModel.loadSearchResults(query)
+                val sort = prefs.getString(getString(R.string.pref_sort_key), null)
+                val user = prefs.getString(getString(R.string.pref_user_key), null)
+                val fistIssues = prefs.getInt(getString(R.string.pref_first_issues_key), 0)
+                val languages = prefs.getStringSet(getString(R.string.pref_language_key), null)
+                viewModel.loadSearchResults(
+                    buildGitHubQuery(query, user, languages, fistIssues),
+                    sort
+                )
                 searchResultsListRV.scrollToPosition(0)
             }
         }

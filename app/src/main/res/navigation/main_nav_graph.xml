@@ -5,6 +5,10 @@
     android:id="@+id/main_nav_graph"
     app:startDestination="@id/github_search">
 
+    <action
+        android:id="@+id/navigate_to_settings"
+        app:destination="@id/settings" />
+
     <fragment
         android:id="@+id/github_search"
         android:name="edu.oregonstate.cs492.githubsearchwithsettings.ui.GitHubSearchFragment"
@@ -22,5 +26,10 @@
             android:name="repo"
             app:argType="edu.oregonstate.cs492.githubsearchwithsettings.data.GitHubRepo"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/settings"
+        android:label="@string/label_settings"
+        android:name="edu.oregonstate.cs492.githubsearchwithsettings.ui.SettingsFragment" />
 
 </navigation>

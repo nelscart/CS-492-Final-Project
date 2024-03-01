@@ -22,10 +22,10 @@ class GitHubSearchViewModel : ViewModel() {
     private val _error = MutableLiveData<String?>(null)
     val error: LiveData<String?> = _error
 
-    fun loadSearchResults(query: String) {
+    fun loadSearchResults(query: String, sort: String?) {
         viewModelScope.launch {
             _loadingStatus.value = LoadingStatus.LOADING
-            val result = repository.loadRepositoriesSearch(query)
+            val result = repository.loadRepositoriesSearch(query, sort)
             _searchResults.value = result.getOrNull()
             _error.value = result.exceptionOrNull()?.message
             _loadingStatus.value = when (result.isSuccess) {

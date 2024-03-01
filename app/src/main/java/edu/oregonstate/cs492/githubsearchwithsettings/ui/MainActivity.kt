@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
                     return when (menuItem.itemId) {
                         R.id.action_settings -> {
                             Log.d(TAG, "Settings action selected")
+                            findNavController(R.id.nav_host_fragment).navigate(R.id.navigate_to_settings)
                             true
                         }
                         else -> false
