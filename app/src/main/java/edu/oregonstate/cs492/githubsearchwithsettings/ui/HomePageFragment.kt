@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.oregonstate.cs492.githubsearchwithsettings.R
@@ -27,7 +28,7 @@ class HomePageFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
         val dates = generateDates()
-        adapter = HomePageAdapter(dates)
+        adapter = HomePageAdapter(dates, findNavController())
         recyclerView.adapter = adapter
 
         return rootView

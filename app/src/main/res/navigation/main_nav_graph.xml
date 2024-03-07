@@ -35,8 +35,22 @@
     <fragment
         android:id="@+id/home_page_fragment"
         android:name="edu.oregonstate.cs492.githubsearchwithsettings.ui.HomePageFragment"
-        android:label="Home Page"
-        />
+        android:label="Log Your Workout!"
+        >
+
+        <action
+            android:id="@+id/navigate_to_workout_detail"
+            app:destination="@id/workout_detail_fragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/workout_detail_fragment"
+        android:name="edu.oregonstate.cs492.githubsearchwithsettings.ui.WorkoutDetailFragment"
+        android:label="Workout Detail">
+        <!-- Add any arguments if needed -->
+    </fragment>
+
 
 
 </navigation>
