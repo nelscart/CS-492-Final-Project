@@ -36,27 +36,27 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(appBar)
         setupActionBarWithNavController(navController, appBarConfig)
 
-        addMenuProvider(
-            object : MenuProvider {
-                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                    menuInflater.inflate(R.menu.activity_main_menu, menu)
-                }
-
-                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                    return when (menuItem.itemId) {
-                        R.id.action_settings -> {
-                            Log.d(TAG, "Settings action selected")
-                            findNavController(R.id.nav_host_fragment).navigate(R.id.navigate_to_settings)
-                            true
-                        }
-                        else -> false
-                    }
-                }
-
-            },
-            this,
-            Lifecycle.State.STARTED
-        )
+//        addMenuProvider(
+//            object : MenuProvider {
+//                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+//                    menuInflater.inflate(R.menu.activity_main_menu, menu)
+//                }
+//
+//                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+//                    return when (menuItem.itemId) {
+//                        R.id.action_settings -> {
+//                            Log.d(TAG, "Settings action selected")
+//                            findNavController(R.id.nav_host_fragment).navigate(R.id.navigate_to_settings)
+//                            true
+//                        }
+//                        else -> false
+//                    }
+//                }
+//
+//            },
+//            this,
+//            Lifecycle.State.STARTED
+//        )
     }
 
     override fun onSupportNavigateUp(): Boolean {

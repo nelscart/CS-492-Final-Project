@@ -3,28 +3,30 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/github_search">
+    app:startDestination="@id/exercise_search">
 
     <action
         android:id="@+id/navigate_to_settings"
         app:destination="@id/settings" />
 
+    <action
+        android:id="@+id/navigate_to_exercise_details"
+        app:destination="@id/exercise_details"/>
+
     <fragment
-        android:id="@+id/github_search"
-        android:name="edu.oregonstate.cs492.githubsearchwithsettings.ui.GitHubSearchFragment"
-        android:label="@string/label_github_search">
-        <action
-            android:id="@+id/navigate_to_repo_detail"
-            app:destination="@id/github_repo_detail" />
+        android:id="@+id/exercise_search"
+        android:name="edu.oregonstate.cs492.githubsearchwithsettings.ui.ExerciseSearchFragment"
+        android:label="Exercise Search">
+
     </fragment>
 
     <fragment
-        android:id="@+id/github_repo_detail"
-        android:name="edu.oregonstate.cs492.githubsearchwithsettings.ui.GitHubRepoDetailFragment"
-        android:label="@string/label_github_repo_detail">
+        android:id="@+id/exercise_details"
+        android:name="edu.oregonstate.cs492.githubsearchwithsettings.ui.ExerciseDetailFragment"
+        android:label="Exercise Details">
         <argument
-            android:name="repo"
-            app:argType="edu.oregonstate.cs492.githubsearchwithsettings.data.GitHubRepo"/>
+            android:name="exercise"
+            app:argType="edu.oregonstate.cs492.githubsearchwithsettings.data.ExerciseSearchResults"/>
     </fragment>
 
     <fragment

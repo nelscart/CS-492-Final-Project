@@ -15,13 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import edu.oregonstate.cs492.githubsearchwithsettings.R
-import edu.oregonstate.cs492.githubsearchwithsettings.data.GitHubRepo
+import edu.oregonstate.cs492.githubsearchwithsettings.data.ExerciseSearchResults
 import edu.oregonstate.cs492.githubsearchwithsettings.util.LoadingStatus
 import edu.oregonstate.cs492.githubsearchwithsettings.util.buildGitHubQuery
 
-class GitHubSearchFragment : Fragment(R.layout.fragment_github_search) {
-    private val viewModel: GitHubSearchViewModel by viewModels()
-    private val adapter = GitHubRepoListAdapter(::onGitHubRepoClick)
+class ExerciseSearchFragment : Fragment(R.layout.fragment_exercise_search) {
+    private val viewModel: ExerciseSearchViewModel by viewModels()
+    private val adapter = ExerciseListAdapter(::onExerciseClicked)
 
     private lateinit var searchResultsListRV: RecyclerView
     private lateinit var searchErrorTV: TextView
@@ -43,7 +43,7 @@ class GitHubSearchFragment : Fragment(R.layout.fragment_github_search) {
         searchResultsListRV.adapter = adapter
 
         viewModel.searchResults.observe(viewLifecycleOwner) {
-                searchResults -> adapter.updateRepoList(searchResults)
+                searchResults -> adapter.updateExerciseList(searchResults)
         }
 
         viewModel.loadingStatus.observe(viewLifecycleOwner) {
@@ -54,11 +54,13 @@ class GitHubSearchFragment : Fragment(R.layout.fragment_github_search) {
                     loadingIndicator.visibility = View.VISIBLE
                     searchErrorTV.visibility = View.INVISIBLE
                 }
+
                 LoadingStatus.ERROR -> {
                     searchResultsListRV.visibility = View.INVISIBLE
                     loadingIndicator.visibility = View.INVISIBLE
                     searchErrorTV.visibility = View.VISIBLE
                 }
+
                 else -> {
                     searchResultsListRV.visibility = View.VISIBLE
                     loadingIndicator.visibility = View.INVISIBLE
@@ -66,7 +68,6 @@ class GitHubSearchFragment : Fragment(R.layout.fragment_github_search) {
                 }
             }
         }
-
         viewModel.error.observe(viewLifecycleOwner) {
                 error -> searchErrorTV.text = getString(
             R.string.search_error,
@@ -74,26 +75,21 @@ class GitHubSearchFragment : Fragment(R.layout.fragment_github_search) {
         )
         }
 
-        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+//        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
 
         searchBtn.setOnClickListener {
             val query = searchBoxET.text.toString()
             if (!TextUtils.isEmpty(query)) {
-                val sort = prefs.getString(getString(R.string.pref_sort_key), null)
-                val user = prefs.getString(getString(R.string.pref_user_key), null)
-                val fistIssues = prefs.getInt(getString(R.string.pref_first_issues_key), 0)
-                val languages = prefs.getStringSet(getString(R.string.pref_language_key), null)
-                viewModel.loadSearchResults(
-                    buildGitHubQuery(query, user, languages, fistIssues),
-                    sort
-                )
+                viewModel.loadSearchResults(query)
                 searchResultsListRV.scrollToPosition(0)
             }
         }
     }
 
-    private fun onGitHubRepoClick(repo: GitHubRepo) {
-        val directions = GitHubSearchFragmentDirections.navigateToRepoDetail(repo)
+    private fun onExerciseClicked(exercise: ExerciseSearchResults) {
+        val directions = ExerciseSearchFragmentDirections.navigateToExerciseDetails(exercise)
         findNavController().navigate(directions)
     }
+
+
 }
